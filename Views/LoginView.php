@@ -34,7 +34,7 @@
     </style>
 
     <div class="login-form">
-        <form action="<?php echo BASE_URL;?>/Login/logar" method="post">
+        <form action="<?php echo BASE_URL;?>/Auth/logar" method="post">
             <label for="login">Usuário:</label>
             <input type="text" id="login" name="login" pattern="[A-Za-z]{6}" title="Usuário deve ter exatamente 6 caracteres alfabéticos" required>
             <br>
@@ -43,6 +43,8 @@
             <br>
             <p id="errormessage" style="color: red;"></p>
             <input type="submit" value="Login">
+
+            <a href="<?php echo BASE_URL?>/Auth">Não tenho conta!</a>
         </form>
     </div>
 </section>

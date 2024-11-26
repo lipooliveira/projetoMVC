@@ -46,7 +46,7 @@
 
     <div class="login-container">
         <h2>Registro</h2>
-        <form action="<?php echo BASE_URL;?>/Registro/incluir" method="post">
+        <form action="<?php echo BASE_URL;?>/Auth/incluir" method="post">
             <input type="text" name="cpf" placeholder="CPF" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato: 000.000.000-00">
             <input type="text" name="nome" placeholder="Nome" required minlength="10" maxlength="80">
             <input type="date" name="data_nascimento" placeholder="Data de Nascimento" required>
@@ -64,6 +64,8 @@
             <input type="password" name="senha" placeholder="Senha" required pattern="[A-Za-z0-9]{8}" title="Apenas letras e números, 8 caracteres">
             <p id="errormessage" style="color: red; text-align: center;"></p>
             <button type="submit">Registrar</button>
+
+            <a href="<?php echo BASE_URL?>/Auth/login">Já tenho conta!</a>
         </form>
     </div>
 

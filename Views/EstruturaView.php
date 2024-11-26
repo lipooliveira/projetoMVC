@@ -67,10 +67,25 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="Dashboard" class="active"><i class="bi bi-house navicon"></i> Produtos</a></li>
-                <li><a href="Login"> <i class="bi bi-person navicon"></i> Entrar</a></li>
-                <li><a href="Registro"> <i class="bi bi-person-plus navicon"></i> Cadastrar</a></li>
-                <li><a href="Master"><i class="bi bi-people navicon"></i> Gerenciar usuários</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/Dashboard" class="active"><i class="bi bi-house navicon"></i> Produtos</a></li>
+                <?php
+                    if(!isset($_SESSION['usuario']))
+                    {
+                        echo '<li><a href="'.BASE_URL.'/Auth/login"> <i class="bi bi-person navicon"></i> Entrar</a></li>
+                            <li><a href="'.BASE_URL.'/Auth"> <i class="bi bi-person-plus navicon"></i> Cadastrar</a></li>';
+                    }
+                    else
+                    {
+                        echo '<li><a href="'.BASE_URL.'/Carrinho"> <i class="bi bi-cart navicon"></i> Carrinho</a></li>
+                            <li><a href="'.BASE_URL.'/Auth/sair"> <i class="bi bi-box-arrow-right navicon"></i> Sair</a></li>';
+
+                        $auth = new AuthController();
+                        if($auth->isMaster())
+                        {
+                            echo '<li><a href="'.BASE_URL.'/Master"><i class="bi bi-people navicon"></i> Gerenciar usuários</a></li>';
+                        }
+                    }
+                    ?>
             </ul>
         </nav>
 
