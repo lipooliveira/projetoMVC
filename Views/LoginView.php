@@ -34,13 +34,14 @@
     </style>
 
     <div class="login-form">
-        <form action="" method="post">
-            <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" pattern="[A-Za-z]{8}" title="Usuário deve ter exatamente 8 caracteres alfabéticos" required>
+        <form action="<?php echo BASE_URL;?>/Login/logar" method="post">
+            <label for="login">Usuário:</label>
+            <input type="text" id="login" name="login" pattern="[A-Za-z]{6}" title="Usuário deve ter exatamente 6 caracteres alfabéticos" required>
             <br>
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" pattern="[A-Za-z0-9]{6}" title="Senha deve ter exatamente 6 caracteres alfanuméricos" required>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" pattern="[A-Za-z0-9]{8}" title="Senha deve ter exatamente 8 caracteres alfanuméricos" required>
             <br>
+            <p id="errormessage" style="color: red;"></p>
             <input type="submit" value="Login">
         </form>
     </div>

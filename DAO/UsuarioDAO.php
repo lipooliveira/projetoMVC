@@ -11,7 +11,7 @@ class UsuarioDAO{
     private function carregarObjeto($item)
     {
         $obj = new UsuarioModel();
-        $obj->setId($item['id_cliente']);
+        $obj->setId($item['id']);
         $obj->setNome($item['nome']);
         $obj->setNomeMae($item['nome_mae']);
         $obj->setDataNascimento($item['data_nascimento']);
@@ -27,7 +27,7 @@ class UsuarioDAO{
         $obj->setEstado($item['estado']);
         $obj->setSenha($item['senha']);
         $obj->setLogin($item['login']);
-        $obj->setPerfil($item['tipo']);
+        $obj->setPerfil($item['perfil']);
         return $obj;
   
     }
@@ -119,18 +119,20 @@ class UsuarioDAO{
         }
         $paramLike = ' "%' . $parametro . '%" ';
 
-        $qry = $this->con->query('SELECT * from editora WHERE'
+        $qry = $this->con->query('SELECT * from usuario WHERE'
                                 . $paramNumero 
                                 . ' nome like ' . $paramLike 
-                                . ' OR cpf like ' . $paramLike );
+                                . ' OR cpf like ' . $paramLike 
+                                . ' OR email like ' . $paramLike
+                                . ' OR login like ' . $paramLike);
 
         $dados = $qry->fetchall(PDO::FETCH_ASSOC);
-        $listaEditoras = array();
+        $listausuarios = array();
         foreach($dados as $dado)
         {
-            $listaEditoras[] = $this->carregarObjeto($dado);
+            $listausuarios[] = $this->carregarObjeto($dado);
         }
-        return $listaEditoras;
+        return $listausuarios;
     }
 
 }

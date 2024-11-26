@@ -40,8 +40,30 @@ class RegistroController extends Controller{
         $obj->setLogin($login);
         $obj->setSenha($senha);
 
-        $daoEditora = new UsuarioDAO();
-        $daoEditora->inserir($obj);
+        $daoUsuario = new UsuarioDAO();
+
+        if($daoUsuario->buscar($obj->getCpf()))
+        {
+            $this->carregarEstrutura('RegistroView');
+            echo    "<script>
+                        document.getElementById('errormessage').innerHTML = 'CPF já cadastrado';
+                    </script>";
+            return;
+        }
+        if($daoUsuario->buscar($obj->getLogin()))
+        {
+            $this->carregarEstrutura('RegistroView');
+            echo "<script>document.getElementById('errormessage').innerHTML = 'Login já cadastrado';</script>";
+            return;
+        }
+        if($daoUsuario->buscar($obj->getEmail()))
+        {
+            $this->carregarEstrutura('RegistroView');
+            echo "<script>document.getElementById('errormessage').innerHTML = 'Email já cadastrado';</script>";
+            return;
+        }
+        $daoUsuario->inserir($obj);
+        header('Location: /projetoMVC/Dashboard');
     }
 }
 ?>

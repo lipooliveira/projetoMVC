@@ -1,5 +1,5 @@
 <?php
-    // Autoload para carregar automaticamente as classes
+    define('BASE_URL', '/projetoMVC');
     require 'autoload.php';
     $app = new App();
     

@@ -1,6 +1,3 @@
-<?php 
-define('BASE_URL', '/av3-template-mvc');
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
