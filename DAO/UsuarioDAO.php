@@ -82,7 +82,7 @@ class UsuarioDAO{
     {
         $qry = $this->con->prepare('UPDATE usuario SET cpf = :cpf, nome = :nome, data_nascimento = :data_nascimento, nome_mae = :nome_mae, email = :email, celular = :celular, cep = :cep, logradouro = :logradouro, numero = :numero, complemento = :complemento, bairro = :bairro, cidade = :cidade, estado = :estado, login = :login, senha = :senha, perfil = :perfil WHERE id =:id');
         
-
+        $qry->bindValue(':id',              $obj->getId());
         $qry->bindValue(':cpf',             $obj->getCpf());
         $qry->bindValue(':nome',            $obj->getNome());
         $qry->bindValue(':data_nascimento', $obj->getDataNascimento());
