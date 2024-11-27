@@ -35,7 +35,6 @@
             <tbody>
                 <?php
                     $dados = json_decode($dados, true);
-
                     $usuarios = [];
                     foreach ($dados as $dado) {
                         $usuario = new UsuarioModel();
@@ -55,7 +54,7 @@
                         echo '<td>'.$usuario->getCpf().'</td>';
                         echo '<td>'.$usuario->getEmail().'</td>';
                         echo '<td>'.($usuario->getPerfil() == 1 ? 'Master' : 'Comum').'</td>';
-                        echo '<td><a href="'.BASE_URL.'/Master/editar/'.$usuario->getId().'">Editar</a> | <a href="'.BASE_URL.'/Master/excluir/'.$usuario->getId().'">Excluir</a></td>';
+                        echo '<td><a href="'.BASE_URL.'/Master/editar/'.$usuario->getId().'">Editar</a> | <a href="'.BASE_URL.'/Master/excluir/'.$usuario->getId().'">Excluir</a> | <a href="'.BASE_URL.'/Master/log/'.$usuario->getId().'">Log</a></td></td>';
                         echo '</tr>';
                     }
                 ?>

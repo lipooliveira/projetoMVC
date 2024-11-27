@@ -28,6 +28,9 @@ class UsuarioDAO{
         $obj->setSenha($item['senha']);
         $obj->setLogin($item['login']);
         $obj->setPerfil($item['perfil']);
+
+        echo json_encode($obj);
+        
         return $obj;
   
     }

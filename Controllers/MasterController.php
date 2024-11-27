@@ -11,19 +11,7 @@ class MasterController extends Controller{
         $this->listarTodos();
     }
 
-    public function listarTodos()
-    {
-        $daoUsuario = new UsuarioDAO();
-        $dados = $daoUsuario->listar();
-
-        $dadosArray = array_map(function($obj) {
-            return $obj->toArray();
-        }, $dados);
-        $dadosJson = json_encode($dadosArray);
-
-        $this->carregarEstrutura('MasterView', $dadosJson);        
-
-    }
+    
 
     public function pesquisar()
     {
@@ -100,6 +88,47 @@ class MasterController extends Controller{
         $daoUsuario = new UsuarioDAO();
         $daoUsuario->atualizar($usuario);
         $this->listarTodos();
+    }
+
+    public function listarTodos()
+    {
+        $daoUsuario = new UsuarioDAO();
+        $dados = $daoUsuario->listar();
+
+        $dadosArray = array_map(function($obj) {
+            return $obj->toArray();
+        }, $dados);
+        $dadosJson = json_encode($dadosArray);
+        
+        $this->carregarEstrutura('MasterView', $dadosJson);        
+
+    }
+
+    public function log($id)
+    {
+        $auth = new AuthController();
+        if(!$auth->isMaster())
+        {
+            $this->carregarEstrutura('ErroView');
+            exit;
+        }
+        $daoLog = new LogDAO();
+        $dados = $daoLog->buscarPorUsuario($id);
+
+        $dadosArray = array();
+
+
+        $daoUsuario = new UsuarioDAO();
+        $usuario = $daoUsuario->retornar($id);
+        $nome = $usuario->getNome();
+        
+        $dadosArray[0] = $nome;
+
+        $dadosArray[1] = array_map(function($obj) {
+            return $obj->toArray();
+        }, $dados);
+        $dadosJson = json_encode($dadosArray);
+        $this->carregarEstrutura('LogView', $dadosJson);
     }
 }
 

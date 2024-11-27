@@ -80,6 +80,11 @@ class AuthController extends Controller{
         {
             if($usuario->getSenha() == $senha)
             {
+                $daoLog = new LogDAO();
+                $modelLog = new LogModel();
+                $modelLog->setIdUsuario($usuario->getId());
+                $daoLog->inserir($modelLog);
+                
                 $_SESSION['usuario'] = serialize($usuario);
                 header('Location: '.BASE_URL.'/');
 
