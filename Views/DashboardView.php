@@ -1,18 +1,33 @@
 <section>
-    <h1>Bem-vindo à Loja de Celulares</h1>
-    <p>Aqui você encontra os melhores celulares com os melhores preços!</p>
-    <div class="produtos">
-        <div class="produto">
-            <h2>iPhone 13</h2>
-            <p>Preço: R$ 7.999,00</p>
-        </div>
-        <div class="produto">
-            <h2>Samsung Galaxy S21</h2>
-            <p>Preço: R$ 5.499,00</p>
-        </div>
-        <div class="produto">
-            <h2>Xiaomi Mi 11</h2>
-            <p>Preço: R$ 4.299,00</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="<?php echo BASE_URL; ?>/assets/img/products/iphone.png" class="card-img-top" alt="Product 1">
+                    <div class="card-body">
+                        <h2 class="card-title">Iphone 15 Pro MAX</h2>
+                        <h3 class="card-text">R$8799.99</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="<?php echo BASE_URL; ?>/assets/img/products/samsung.png" class="card-img-top" alt="Product 2">
+                    <div class="card-body">
+                        <h2 class="card-title">Samsung S24 Ultra</h2>
+                        <h3 class="card-text">R$8999.99</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="<?php echo BASE_URL; ?>/assets/img/products/motorola.webp" class="card-img-top" alt="Product 3">
+                    <div class="card-body">
+                        <h2 class="card-title">Motorola Edge 50 Ultra</h2>
+                        <h3 class="card-text">R$4999.99</h3>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
