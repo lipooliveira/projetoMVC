@@ -28,6 +28,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">CPF</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Perfil</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@
                         $usuario->setNome($dado['nome']);
                         $usuario->setCpf($dado['cpf']);
                         $usuario->setEmail($dado['email']);
+                        $usuario->setPerfil($dado['perfil']);
                         $usuarios[] = $usuario;
                     }
                     $dados = $usuarios;
@@ -52,6 +54,7 @@
                         echo '<td>'.$usuario->getNome().'</td>';
                         echo '<td>'.$usuario->getCpf().'</td>';
                         echo '<td>'.$usuario->getEmail().'</td>';
+                        echo '<td>'.($usuario->getPerfil() == 1 ? 'Master' : 'Comum').'</td>';
                         echo '<td><a href="'.BASE_URL.'/Master/editar/'.$usuario->getId().'">Editar</a> | <a href="'.BASE_URL.'/Master/excluir/'.$usuario->getId().'">Excluir</a></td>';
                         echo '</tr>';
                     }

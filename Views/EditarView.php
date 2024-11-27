@@ -28,8 +28,7 @@
         <form action="<?php echo BASE_URL?>/Master/atualizar" method="POST">
             <input type="hidden" name="id" value="<?php echo $usuario->getId()?>">
             <div class="form-group">
-                <label for="cpf">CPF:</label>
-                <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $usuario->getCpf()?>" required>
+                  <input type="text" class="form-control" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="O CPF deve estar no formato xxx.xxx.xxx-xx" value="<?php echo $usuario->getCpf()?>" required>
             </div>
             <div class="form-group">
                 <label for="nome">Nome:</label>
@@ -49,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label for="celular">Celular:</label>
-                <input type="text" class="form-control" id="celular" name="celular" value="<?php echo $usuario->getCelular()?>" required>
+                <input type="text" class="form-control" id="celular" name="celular" pattern="\(\d{2}\) \d{5}-\d{4}" title="O celular deve estar no formato (ddd) xxxxx-xxxx" value="<?php echo $usuario->getCelular()?>" required>
             </div>
             <div class="form-group">
                 <label for="cep">CEP:</label>
@@ -88,13 +87,36 @@
             </div>
             <div class="form-group">
                 <label for="login">Login:</label>
-                <input type="text" class="form-control" id="login" name="login" value="<?php echo $usuario->getLogin()?>" required>
+                <input type="text" class="form-control" id="login" name="login" pattern="^[a-zA-Z]{6}$" title="O login deve ter 6 caracteres alfabéticos" value="<?php echo $usuario->getLogin()?>" required>
             </div>
             <div class="form-group">
                 <label for="senha">Senha:</label>
-                <input type="text" class="form-control" id="senha" name="senha" value="<?php echo $usuario->getSenha()?>" required>
+                <input type="password" class="form-control" id="senha" name="senha" pattern="^[a-zA-Z0-9]{8}$" title="A senha deve ter 8 caracteres alfanuméricos" value="<?php echo $usuario->getSenha()?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
     </div>
+
+    <script>
+    document.getElementById('cep').addEventListener('blur', function() {
+        var cep = this.value.replace(/\D/g, '');
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        document.getElementById('logradouro').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('estado').value = data.uf;
+                    } else {
+                        alert('CEP não encontrado.');
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar o CEP:', error));
+        } else {
+            alert('CEP inválido.');
+        }
+    });
+    </script>
 </section>
