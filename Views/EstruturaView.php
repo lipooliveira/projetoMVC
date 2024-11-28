@@ -54,41 +54,55 @@
 
 <body class="index-page">
 
-    <header id="header" class="header dark-background d-flex flex-column">
-        <i class="header-toggle d-xl-none bi bi-list"></i>
+    <header id="header" class="header dark-background d-flex flex-column justify-content-between">
+        <div>
+            <i class="header-toggle d-xl-none bi bi-list"></i>
 
-        <div class="profile-img">
-            <img src="<?php echo BASE_URL; ?>/assets/img/avatar.png" alt="" class="img-fluid rounded-circle">
-        </div>
+            <div class="profile-img">
+                <img src="<?php echo BASE_URL; ?>/assets/img/avatar.png" alt="" class="img-fluid rounded-circle">
+            </div>
 
-        <a href="<?php echo BASE_URL; ?>/index.php" class="logo d-flex align-items-center justify-content-center">
-            <h1 class="sitename">Loja boa</h1>
-        </a>
+            <a href="<?php echo BASE_URL; ?>/index.php" class="logo d-flex align-items-center justify-content-center">
+                <h1 class="sitename">Loja boa</h1>
+            </a>
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="<?php echo BASE_URL; ?>/Dashboard" class="active"><i class="bi bi-house navicon"></i> Produtos</a></li>
-                <?php
-                    if(!isset($_SESSION['usuario']))
-                    {
-                        echo '<li><a href="'.BASE_URL.'/Auth/login"> <i class="bi bi-person navicon"></i> Entrar</a></li>
-                            <li><a href="'.BASE_URL.'/Auth"> <i class="bi bi-person-plus navicon"></i> Cadastrar</a></li>';
-                    }
-                    else
-                    {
-                        echo '<li><a href="'.BASE_URL.'/Carrinho"> <i class="bi bi-cart navicon"></i> Carrinho</a></li>
-                            <li><a href="'.BASE_URL.'/Auth/sair"> <i class="bi bi-box-arrow-right navicon"></i> Sair</a></li>';
-
-                        $auth = new AuthController();
-                        if($auth->isMaster())
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="<?php echo BASE_URL; ?>/Dashboard" class="active"><i class="bi bi-house navicon"></i> Produtos</a></li>
+                    <?php
+                        if(!isset($_SESSION['usuario']))
                         {
-                            echo '<li><a href="'.BASE_URL.'/Master"><i class="bi bi-people navicon"></i> Gerenciar usuários</a></li>';
+                            echo '<li><a href="'.BASE_URL.'/Auth/login"> <i class="bi bi-person navicon"></i> Entrar</a></li>
+                                <li><a href="'.BASE_URL.'/Auth"> <i class="bi bi-person-plus navicon"></i> Cadastrar</a></li>';
                         }
-                    }
-                    ?>
-            </ul>
-        </nav>
+                        else
+                        {
+                            echo '<li><a href="'.BASE_URL.'/Carrinho"> <i class="bi bi-cart navicon"></i> Carrinho</a></li>
+                                <li><a href="'.BASE_URL.'/Auth/sair"> <i class="bi bi-box-arrow-right navicon"></i> Sair</a></li>';
 
+                            $auth = new AuthController();
+                            if($auth->isMaster())
+                            {
+                                echo '<li><a href="'.BASE_URL.'/Master"><i class="bi bi-people navicon"></i> Gerenciar usuários</a></li>';
+                            }
+                        }
+                        ?>
+                </ul>
+            </nav>
+        </div>
+        <?php
+            if(isset($_SESSION['usuario']))
+            {
+                $usuario = unserialize($_SESSION['usuario']);
+                echo '<div class="profile-info d-flex justify-content-around align-items-center">
+                    <i class="bi bi-gear" style="font-size: 2em;"></i>
+                    <div>
+                        <h4 class="profile-name" style="margin: 0;">'.$usuario->getNome().'</h4>
+                        <p class="profile-email" style="font-size: 0.8em; color: #888; margin: 0;">'.$usuario->getEmail().'</p>
+                    </div>
+                </div>';
+            }
+        ?>
     </header>
 
     <main class="main">

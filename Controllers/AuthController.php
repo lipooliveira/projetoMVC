@@ -64,31 +64,60 @@ class AuthController extends Controller{
         }
         
         $daoUsuario->inserir($obj);
-        $this->logar($obj->getLogin(), $obj->getSenha());
+        $this->autenticar($obj->getLogin(), $obj->getSenha(), 0, $obj->getCpf());
     }
 
-    public function logar()
-    {
+    public function autenticar(){
         $login = isset($_POST['login']) ? $_POST['login'] : '';
         $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
+        $segundoFator = isset($_POST['segundoFator']) ? $_POST['segundoFator'] : '';
+        $id_segundoFator = isset($_POST['id_segundoFator']) ? $_POST['id_segundoFator'] : '';
 
         $daoUsuario = new UsuarioDAO();
-        $usuario = $daoUsuario->buscar($login)[0];
-        
+        $usuarios = $daoUsuario->buscar($login, $senha);
 
-        if($usuario)
+        if(!empty($usuarios))
         {
-            if($usuario->getSenha() == $senha)
+            $usuario = $usuarios[0];
+            if($usuario->getSenha() != $senha)
             {
-                $daoLog = new LogDAO();
-                $modelLog = new LogModel();
-                $modelLog->setIdUsuario($usuario->getId());
-                $daoLog->inserir($modelLog);
-                
-                $_SESSION['usuario'] = serialize($usuario);
-                header('Location: '.BASE_URL.'/');
-
+                $this->carregarEstrutura('LoginView');
+                echo "<script>document.getElementById('errormessage').innerHTML = 'Usuário ou senha incorreta';</script>";
+                return;
             }
+            switch($id_segundoFator){
+                case 0:
+                    if($usuario->getCpf() == $segundoFator)
+                    {
+                        $_SESSION['usuario'] = serialize($usuario);
+                        header('Location: '.BASE_URL.'/');
+                    }
+                    break;
+                case 1:
+                    if($usuario->getDataNascimento() == $segundoFator)
+                    {
+                        $_SESSION['usuario'] = serialize($usuario);
+                        header('Location: '.BASE_URL.'/');
+                    }
+                    break;
+                case 2:
+                    if($usuario->getCep() == $segundoFator)
+                    {
+                        $_SESSION['usuario'] = serialize($usuario);
+                        header('Location: '.BASE_URL.'/');
+                    }
+                    break;
+                case 3:
+                    if($usuario->getNomeMae() == $segundoFator)
+                    {
+                        $_SESSION['usuario'] = serialize($usuario);
+                        header('Location: '.BASE_URL.'/');
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }else{
             $this->carregarEstrutura('LoginView');
             echo "<script>document.getElementById('errormessage').innerHTML = 'Usuário ou senha incorreta';</script>";
         }
