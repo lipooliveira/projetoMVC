@@ -9,6 +9,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Data</th>
+                    <th scope="col">Descrição</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                         $log = new LogModel();
                         $log->setId($dado['id']);
                         $log->setTimestamp($dado['timestamp']);
+                        $log->setDescricao($dado['descricao']);
                         $logs[] = $log;
                     }
                     $dados = $logs;
@@ -27,6 +29,7 @@
                         echo '<tr>';
                         echo '<td>'.$log->getId().'</td>';
                         echo '<td>'.$log->getTimestamp().'</td>';
+                        echo '<td>'.$log->getDescricao().'</td>';
                         echo '</tr>';
                     }
                 ?>

@@ -94,12 +94,14 @@
             if(isset($_SESSION['usuario']))
             {
                 $usuario = unserialize($_SESSION['usuario']);
-                echo '<div class="profile-info d-flex justify-content-around align-items-center">
-                    <i class="bi bi-gear" style="font-size: 2em;"></i>
-                    <div>
-                        <h4 class="profile-name" style="margin: 0;">'.$usuario->getNome().'</h4>
-                        <p class="profile-email" style="font-size: 0.8em; color: #888; margin: 0;">'.$usuario->getEmail().'</p>
-                    </div>
+                echo '<div class="profile-info">
+                    <a href="'.BASE_URL.'/Usuario" class="d-flex justify-content-around align-items-center">  
+                        <i class="bi bi-gear navicon" style="font-size: 2em;"></i>
+                        <div>
+                            <h4 class="profile-name" style="margin: 0;">'.$usuario->getNome().'</h4>
+                            <p class="profile-email" style="font-size: 0.8em; color: #888; margin: 0;">'.$usuario->getEmail().'</p>
+                        </div>
+                    </a>
                 </div>';
             }
         ?>

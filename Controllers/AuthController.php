@@ -63,18 +63,35 @@ class AuthController extends Controller{
             return;
         }
         
+
         $daoUsuario->inserir($obj);
-        $this->autenticar($obj->getLogin(), $obj->getSenha(), 0, $obj->getCpf());
+        $usuario = $daoUsuario->buscar($obj->getLogin());
+        if(empty($usuario))
+        {
+            $this->carregarEstrutura('RegistroView');
+            echo "<script>document.getElementById('errormessage').innerHTML = 'Erro ao cadastrar usuário';</script>";
+            return;
+        }
+        $_SESSION['usuario'] = serialize($usuario[0]);
+
+        $daoLog = new LogDAO();
+        $log = new LogModel();
+        $log->setIdUsuario($usuario[0]->getId());
+        $log->setDescricao('Usuário cadastrado');
+        $daoLog->inserir($log);
     }
 
-    public function autenticar(){
-        $login = isset($_POST['login']) ? $_POST['login'] : '';
-        $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
-        $segundoFator = isset($_POST['segundoFator']) ? $_POST['segundoFator'] : '';
-        $id_segundoFator = isset($_POST['id_segundoFator']) ? $_POST['id_segundoFator'] : '';
+    public function autenticar($login = null, $senha = null, $segundoFator = null, $id_segundoFator = null){
+        if($login == null || $senha == null || $segundoFator == null || $id_segundoFator == null)
+        {
+            $login = isset($_POST['login']) ? $_POST['login'] : '';
+            $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
+            $segundoFator = isset($_POST['segundoFator']) ? $_POST['segundoFator'] : '';
+            $id_segundoFator = isset($_POST['id_segundoFator']) ? $_POST['id_segundoFator'] : '';
+        }
 
         $daoUsuario = new UsuarioDAO();
-        $usuarios = $daoUsuario->buscar($login, $senha);
+        $usuarios = $daoUsuario->buscar($login);
 
         if(!empty($usuarios))
         {
@@ -90,6 +107,12 @@ class AuthController extends Controller{
                     if($usuario->getCpf() == $segundoFator)
                     {
                         $_SESSION['usuario'] = serialize($usuario);
+                        $daoLog = new LogDAO();
+                        $log = new LogModel();
+                        $log->setIdUsuario($usuario->getId());
+                        $log->setDescricao('Usuário entrou usando CPF');
+                        $daoLog->inserir($log);
+
                         header('Location: '.BASE_URL.'/');
                     }
                     break;
@@ -97,6 +120,12 @@ class AuthController extends Controller{
                     if($usuario->getDataNascimento() == $segundoFator)
                     {
                         $_SESSION['usuario'] = serialize($usuario);
+                        $daoLog = new LogDAO();
+                        $log = new LogModel();
+                        $log->setIdUsuario($usuario->getId());
+                        $log->setDescricao('Usuário entrou usando Data de Nascimento');
+                        $daoLog->inserir($log);
+                        
                         header('Location: '.BASE_URL.'/');
                     }
                     break;
@@ -104,6 +133,12 @@ class AuthController extends Controller{
                     if($usuario->getCep() == $segundoFator)
                     {
                         $_SESSION['usuario'] = serialize($usuario);
+                        $daoLog = new LogDAO();
+                        $log = new LogModel();
+                        $log->setIdUsuario($usuario->getId());
+                        $log->setDescricao('Usuário entrou usando CEP');
+                        $daoLog->inserir($log);
+
                         header('Location: '.BASE_URL.'/');
                     }
                     break;
@@ -111,16 +146,28 @@ class AuthController extends Controller{
                     if($usuario->getNomeMae() == $segundoFator)
                     {
                         $_SESSION['usuario'] = serialize($usuario);
+                        $daoLog = new LogDAO();
+                        $log = new LogModel();
+                        $log->setIdUsuario($usuario->getId());
+                        $log->setDescricao('Usuário entrou usando Nome da Mãe');
+                        $daoLog->inserir($log);
+
                         header('Location: '.BASE_URL.'/');
                     }
                     break;
                 default:
+                    $this->carregarEstrutura('LoginView');
+                    echo "<script>document.getElementById('errormessage').innerHTML = 'Fator de autenticação inválido.';</script>";
                     break;
             }
         }else{
             $this->carregarEstrutura('LoginView');
             echo "<script>document.getElementById('errormessage').innerHTML = 'Usuário ou senha incorreta';</script>";
+            return;
         }
+        $this->carregarEstrutura('LoginView');
+        echo "<script>document.getElementById('errormessage').innerHTML = 'Fator de autenticação inválido.';</script>";
+        return;
     }
 
     public function logado()

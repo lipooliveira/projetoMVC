@@ -13,6 +13,7 @@ class LogDAO{
         $obj->setId($item['id']);
         $obj->setTimestamp($item['timestamp']);
         $obj->setIdUsuario($item['id_usuario']);
+        $obj->setDescricao($item['descricao']);
 
         return $obj;
     }
@@ -35,12 +36,13 @@ class LogDAO{
     public function inserir($obj)
     {
         if ($obj->getTimestamp() === null) {
-            $qry = $this->con->prepare('INSERT INTO log (id_usuario) VALUES (:id_usuario)');
+            $qry = $this->con->prepare('INSERT INTO log (id_usuario, descricao) VALUES (:id_usuario, :descricao)');
         } else {
-            $qry = $this->con->prepare('INSERT INTO log (timestamp, id_usuario) VALUES (:timestamp, :id_usuario)');
+            $qry = $this->con->prepare('INSERT INTO log (timestamp, id_usuario, descricao) VALUES (:timestamp, :id_usuario, :descricao)');
             $qry->bindValue(':timestamp', $obj->getTimestamp());
         }
         $qry->bindValue(':id_usuario', $obj->getIdUsuario());
+        $qry->bindValue(':descricao', $obj->getDescricao());
 
         $qry->execute();
     }

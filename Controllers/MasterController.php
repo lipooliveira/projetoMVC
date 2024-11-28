@@ -43,7 +43,7 @@ class MasterController extends Controller{
         }
         $daoUsuario = new UsuarioDAO();
         $usuario = $daoUsuario->retornar($id);
-        $this->carregarEstrutura('EditarView', $usuario->toArray());
+        $this->carregarEstrutura('EditarMasterView', $usuario->toArray());
     }
 
     public function excluir($id)

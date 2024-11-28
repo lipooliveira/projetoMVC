@@ -62,6 +62,7 @@
             <input type="text" name="estado" placeholder="Estado" required>
             <input type="text" name="login" placeholder="Login" required pattern="[A-Za-z]{6}" title="Apenas letras, 6 caracteres">
             <input type="password" name="senha" placeholder="Senha" required pattern="[A-Za-z0-9]{8}" title="Apenas letras e números, 8 caracteres">
+            <input type="password" name="repetir_senha" placeholder="Repetir Senha" required pattern="[A-Za-z0-9]{8}" title="Apenas letras e números, 8 caracteres">
             <p id="errormessage" style="color: red; text-align: center;"></p>
             <button type="submit">Registrar</button>
 
@@ -78,6 +79,13 @@
                 if (!isValidCPF(cpfInput.value)) {
                     event.preventDefault();
                     alert('CPF inválido.');
+                }
+                const senha = document.querySelector('input[name="senha"]').value;
+                const repetirSenha = document.querySelector('input[name="repetir_senha"]').value;
+
+                if (senha !== repetirSenha) {
+                    event.preventDefault();
+                    alert('As senhas não coincidem.');
                 }
             });
 
