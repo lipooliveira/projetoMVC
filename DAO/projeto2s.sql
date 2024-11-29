@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
   `timestamp` timestamp NULL DEFAULT current_timestamp(),
-  `id_usuario` int(11) NOT NULL
+  `id_usuario` int(11) NOT NULL,
+  `descricao` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
