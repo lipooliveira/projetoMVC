@@ -8,6 +8,4 @@ class ErroController extends Controller{
 
 
 }
-
-
 ?>

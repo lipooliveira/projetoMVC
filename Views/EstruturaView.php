@@ -87,6 +87,7 @@
                             }
                         }
                         ?>
+                    <li><a href="<?php echo BASE_URL; ?>/Modelos"><i class="bi bi-archive navicon"></i> Modelos</a></li>
                 </ul>
             </nav>
         </div>
