@@ -93,6 +93,12 @@ ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
+--
+-- Criar usuário master
+--
+INSERT INTO `usuario` (`id`, `cpf`, `nome`, `data_nascimento`, `nome_mae`, `email`, `celular`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `login`, `senha`, `perfil`) VALUES
+(1, '000.000.000-00', 'Felipe Gomes de Oliveira', '2005-10-03', 'Gizelia', 'teste@gmail.com', '(21) 97106-3843', '21060-630', 'Rua Regio', '15', 'Casa', 'Ramos', 'Rio de Janeiro', 'Rio de Janeiro', 'master', '12345678', 1);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

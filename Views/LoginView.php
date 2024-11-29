@@ -71,7 +71,7 @@
                 echo '<input type="hidden" name="id_segundoFator" value="' . $segundoFator . '">';
                 $inputType = ($segundoFator == 1) ? 'date' : 'text';
                 echo '<input type="' . $inputType . '" name="segundoFator">';
-                echo '<input type="button" value="Enviar">';
+                echo '<input id="modalbutton" type="button" value="Enviar">';
                 echo '</div>';
                 echo '</div>';
             ?>
@@ -103,8 +103,9 @@
         ?>
 
         <script>
-            document.querySelector('input[type="button"]').addEventListener('click', function() {
-                document.querySelector('.modal').style.display = 'flex';
+            document.getElementById('modalbutton').addEventListener('click', function() {
+                document.querySelector('.modal').style.display = 'none';
+                document.querySelector('form').submit();
             });
             var modal = document.querySelector('.modal');
             window.onclick = function(event) {

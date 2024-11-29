@@ -28,8 +28,6 @@ class UsuarioDAO{
         $obj->setSenha($item['senha']);
         $obj->setLogin($item['login']);
         $obj->setPerfil($item['perfil']);
-
-        echo json_encode($obj);
         
         return $obj;
   
@@ -111,6 +109,13 @@ class UsuarioDAO{
         $qry = $this->con->prepare('DELETE FROM usuario WHERE id =:id');
         $qry->bindValue(':id', $id);
         $qry->execute();
+    }
+
+    public function buscarUsuario($login){
+        $qry = $this->con->query('select * from usuario where login="'.$login.'"');
+        $dado = $qry->fetch(PDO::FETCH_ASSOC);
+        $obj = $this->carregarObjeto($dado);
+        return $obj;
     }
 
     public function buscar($parametro)

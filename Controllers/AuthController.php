@@ -94,11 +94,10 @@ class AuthController extends Controller{
         }
 
         $daoUsuario = new UsuarioDAO();
-        $usuarios = $daoUsuario->buscar($login);
+        $usuario = $daoUsuario->buscarUsuario($login);
 
-        if(!empty($usuarios))
+        if(!empty($usuario))
         {
-            $usuario = $usuarios[0];
             if($usuario->getSenha() != $senha)
             {
                 $this->carregarEstrutura('LoginView');
