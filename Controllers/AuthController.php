@@ -79,6 +79,9 @@ class AuthController extends Controller{
         $log->setIdUsuario($usuario[0]->getId());
         $log->setDescricao('Usuário cadastrado');
         $daoLog->inserir($log);
+
+        
+        header('Location: '.BASE_URL.'/');
     }
 
     public function autenticar($login = null, $senha = null, $segundoFator = null, $id_segundoFator = null){
