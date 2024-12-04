@@ -11,17 +11,12 @@ class UsuarioController extends Controller{
     }
 
     public function editar(){
-        $id = $_GET['id'];
 
-        $sessionUser = unserialize($_SESSION['usuario']);
-
-        if($sessionUser->getId() == $id || $sessionUser->getPerfil() == 1)
-        {
-            $daoUsuario = new UsuarioDAO();
-            $usuario = $daoUsuario->retornar($id);
-            $this->carregarEstrutura('EditarUsuarioView', $usuario->toArray());
+        if(empty($_SESSION)){
+            header('Location: '.BASE_URL.'/Login');
             return;
         }
+        $sessionUser = unserialize($_SESSION['usuario']);
 
         $usuario = new UsuarioModel();
         $usuario->setId($sessionUser->getId());

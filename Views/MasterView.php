@@ -1,4 +1,25 @@
 <section>
+
+    <div class="modal" id="confirmDeleteModal" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza que deseja excluir este usuário?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <div class="container mt-3">
         <h1>Controle de usuários</h1>
         <form class="form-inline" action="<?php echo BASE_URL?>/Master/pesquisar" method="POST">
@@ -7,7 +28,6 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: #f8f9fa;">Pesquisar</button>
         </form>
     </div>
-
 
     <script>
     document.getElementById('query').addEventListener('input', function (e) {
@@ -54,10 +74,32 @@
                         echo '<td>'.$usuario->getCpf().'</td>';
                         echo '<td>'.$usuario->getEmail().'</td>';
                         echo '<td>'.($usuario->getPerfil() == 1 ? 'Master' : 'Comum').'</td>';
-                        echo '<td><a href="'.BASE_URL.'/Master/editar/'.$usuario->getId().'">Editar</a> | <a href="'.BASE_URL.'/Master/excluir/'.$usuario->getId().'">Excluir</a> | <a href="'.BASE_URL.'/Master/log/'.$usuario->getId().'">Log</a></td></td>';
+                        echo '<td><a href="'.BASE_URL.'/Master/editar/'.$usuario->getId().'">Editar</a> | <a class="delete" href="'.BASE_URL.'/Master/excluir/'.$usuario->getId().'">Excluir</a> | <a href="'.BASE_URL.'/Master/log/'.$usuario->getId().'">Log</a></td></td>';
                         echo '</tr>';
                     }
                 ?>
             </tbody>
         </table>
+
+        <script>
+            let userIdToDelete = null;
+
+            document.querySelectorAll('.delete').forEach(function(element) {
+                element.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    userIdToDelete = event.target.href.split('/').pop();
+                    document.getElementById('confirmDeleteModal').style.display = 'block';
+            });
+            });
+
+            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+                if (userIdToDelete) {
+                    window.location.href = '<?php echo BASE_URL; ?>/Master/excluir/' + userIdToDelete;
+                }
+            });
+
+            document.getElementById('cancelDeleteBtn').addEventListener('click', function(){
+                document.getElementById('confirmDeleteModal').style.display = 'none';
+            })
+        </script>
 </section>
