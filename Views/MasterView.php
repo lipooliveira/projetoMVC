@@ -4,15 +4,24 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                        <h3 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Tem certeza que deseja excluir este usuário?
+                        <h3>
+                            Tem certeza que deseja excluir este usuário?
+                        </h3>
+                        <h4 id="username"></h4>
+                        <h4 id="cpf"></h4>
+                        
                     </div>
                     <div class="modal-footer">
+                    <p><strong>
+                            Esta ação não poderá ser desfeita.
+
+                        </strong></p>
                         <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancelar</button>
                         <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
                     </div>
@@ -89,6 +98,8 @@
                     event.preventDefault();
                     userIdToDelete = event.target.href.split('/').pop();
                     document.getElementById('confirmDeleteModal').style.display = 'block';
+                    document.getElementById('username').innerText = event.target.parentElement.parentElement.children[1].innerText;
+                    document.getElementById('cpf').innerText = event.target.parentElement.parentElement.children[2].innerText;
             });
             });
 
